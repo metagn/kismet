@@ -1,0 +1,17 @@
+package metagn.kismet.type
+
+import groovy.transform.CompileStatic
+import metagn.kismet.vm.IKismetObject
+
+@CompileStatic
+@Singleton(property = 'INSTANCE')
+class NoType extends AbstractType {
+	TypeRelation weakRelation(Type other) {
+		other == this ? TypeRelation.equal() : TypeRelation.subtype(Integer.MAX_VALUE)
+	}
+
+	boolean equals(other) { other instanceof NoType }
+	String toString() { 'None' }
+
+	boolean check(IKismetObject obj) { null == obj || null == obj.inner() }
+}

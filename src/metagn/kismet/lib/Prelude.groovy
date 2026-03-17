@@ -1,0 +1,32 @@
+package metagn.kismet.lib
+
+import groovy.transform.CompileStatic
+import metagn.kismet.scope.Context
+import metagn.kismet.scope.Module
+
+@CompileStatic
+@SuppressWarnings("ChangeToOperator")
+class Prelude extends NativeModule {
+	static final List<NativeModule> defaultModules = [
+            new Syntax(), new Reflection(), new Modules(), new Types(),
+            new Functions(), new Logic(), new Errors(), new Numbers(),
+            new Comparison(), new Strings(), new CollectionsIterators(),
+            new RandomModule(), new Json(), new Times()
+	].asImmutable()
+
+	Prelude() {
+		super("prelude")
+		for (Module mod : defaultModules) {
+			typedContext.heritage.add(mod.typeContext())
+			defaultContext = new Context(mod.defaultContext, defaultContext.getVariables())
+		}
+	}
+}
+
+
+
+
+
+
+
+
